@@ -1,0 +1,5 @@
+import React from "react";
+import { Trash2, UserRoundSearch } from "lucide-react";
+import { useApp } from "../context/AppContext";
+import { Badge, Button, Card } from "../components/UI";
+export default function TalentPool() { const { talentPool, deleteTalent, user } = useApp(); const canDelete = user?.role === "company-admin"; return <div><div className="page-head"><div><h1>Talent Pool</h1><p>Saved candidates for future roles. Applicants are not notified when saved.</p></div></div>{talentPool.length ? <div className="jobs-grid">{talentPool.map(x => <Card key={x.id}><div className="candidate-top"><div className="avatar">{x.name[0]}</div><div><h3>{x.name}</h3><small>Saved by {x.owner}</small></div></div><div className="tags">{x.tags.map(t => <Badge key={t}>{t}</Badge>)}</div>{canDelete && <div className="right"><Button variant="danger" icon={<Trash2 size={15} />} onClick={() => deleteTalent(x.id)}>Remove</Button></div>}</Card>)}</div> : <div className="center"><UserRoundSearch size={40} /><h3>Your talent pool is empty</h3><p>Save candidates from the pipeline for future roles.</p></div>}</div>; }
